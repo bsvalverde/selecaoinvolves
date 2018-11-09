@@ -9,7 +9,7 @@ import com.involves.selecao.alerta.Alerta;
 import com.involves.selecao.alerta.Pesquisa;
 import com.involves.selecao.alerta.Resposta;
 import com.involves.selecao.gateway.AlertaGateway;
-import com.involves.selecao.service.BuscadorURLService;
+import com.involves.selecao.service.ColetorPesquisasService;
 
 @Service
 public class ProcessadorAlertas {
@@ -18,13 +18,10 @@ public class ProcessadorAlertas {
   private AlertaGateway gateway;
 
   @Autowired
-  private BuscadorURLService buscador;
+  private ColetorPesquisasService coletor;
   
   public void processa() throws IOException {
-    String content = buscador.buscar("https://selecao-involves.agilepromoter.com/pesquisas");
-    
-    Gson gson = new Gson();
-    Pesquisa[] ps =  gson.fromJson(content, Pesquisa[].class);
+    Pesquisa[] ps =  coletor.coletar();
     for (int i = 0; i < ps.length; i++){
       for (int j = 0; j < ps[i].getRespostas().size(); j++){
         Resposta resposta = ps[i].getRespostas().get(j);
