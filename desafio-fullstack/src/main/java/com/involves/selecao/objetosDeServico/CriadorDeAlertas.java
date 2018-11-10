@@ -1,14 +1,11 @@
-package com.involves.selecao.service;
-
-import org.springframework.stereotype.Service;
+package com.involves.selecao.objetosDeServico;
 
 import com.involves.selecao.alerta.Alerta;
 import com.involves.selecao.alerta.Pesquisa;
 import com.involves.selecao.alerta.Resposta;
 import com.involves.selecao.alerta.TipoAlerta;
 
-@Service
-public class CriadorAlertasService {
+public class CriadorDeAlertas {
 
   private Pesquisa pesquisa;
   private Resposta resposta;
@@ -16,11 +13,13 @@ public class CriadorAlertasService {
 
   private Alerta alerta;
 
-  public Alerta criar(Pesquisa pesquisa, Resposta resposta, TipoAlerta tipo) {
+  public CriadorDeAlertas(Pesquisa pesquisa, Resposta resposta, TipoAlerta tipo) {
     this.pesquisa = pesquisa;
     this.resposta = resposta;
     this.tipo = tipo;
+  }
 
+  public Alerta call() {
     alerta = new Alerta();
     alerta.setPontoDeVenda(pesquisa.getPonto_de_venda());
     alerta.setDescricao(tipo.getDescricao());

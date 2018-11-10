@@ -10,8 +10,8 @@ import com.involves.selecao.alerta.Pesquisa;
 import com.involves.selecao.alerta.Resposta;
 import com.involves.selecao.alerta.TipoAlerta;
 import com.involves.selecao.gateway.AlertaGateway;
+import com.involves.selecao.objetosDeServico.CriadorDeAlertas;
 import com.involves.selecao.service.ColetorPesquisasService;
-import com.involves.selecao.service.CriadorAlertasService;
 
 @Service
 public class ProcessadorAlertas {
@@ -21,9 +21,6 @@ public class ProcessadorAlertas {
 
   @Autowired
   private ColetorPesquisasService coletor;
-
-  @Autowired
-  private CriadorAlertasService criador;
   
   public void processa() throws IOException {
     Pesquisa[] ps = coletor.coletar();
@@ -32,17 +29,17 @@ public class ProcessadorAlertas {
         Resposta resposta = ps[i].getRespostas().get(j);
         if (resposta.getPergunta().equals("Qual a situação do produto?")) {
           if(resposta.getResposta().equals("Produto ausente na gondola")){
-            Alerta alerta = criador.criar(ps[i], ps[i].getRespostas().get(j), TipoAlerta.RUPTURA);
+            Alerta alerta = new CriadorDeAlertas(ps[i], ps[i].getRespostas().get(j), TipoAlerta.RUPTURA).call();
             gateway.salvar(alerta);
           }
         } else if(resposta.getPergunta().equals("Qual o preço do produto?")) {
           int precoColetado = Integer.parseInt(resposta.getResposta());
           int precoEstipulado = Integer.parseInt(ps[i].getPreco_estipulado());
           if(precoColetado > precoEstipulado){
-            Alerta alerta = criador.criar(ps[i], ps[i].getRespostas().get(j), TipoAlerta.PRECO_ACIMA);
+            Alerta alerta = new CriadorDeAlertas(ps[i], ps[i].getRespostas().get(j), TipoAlerta.PRECO_ACIMA).call();
             gateway.salvar(alerta);
           } else if(precoColetado < precoEstipulado){
-            Alerta alerta = criador.criar(ps[i], ps[i].getRespostas().get(j), TipoAlerta.PRECO_ABAIXO);
+            Alerta alerta = new CriadorDeAlertas(ps[i], ps[i].getRespostas().get(j), TipoAlerta.PRECO_ABAIXO).call();
             gateway.salvar(alerta);
           }
         } else {
