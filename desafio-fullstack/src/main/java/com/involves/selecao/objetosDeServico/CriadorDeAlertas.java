@@ -24,6 +24,7 @@ public class CriadorDeAlertas {
     alerta.setPontoDeVenda(pesquisa.getPonto_de_venda());
     alerta.setDescricao(tipo.getDescricao());
     alerta.setProduto(pesquisa.getProduto());
+    alerta.setCategoria(pesquisa.getCategoria());
     alerta.setFlTipo(tipo.getFlTipo());
     calcularMargem();
     return alerta;
@@ -33,6 +34,10 @@ public class CriadorDeAlertas {
     switch(tipo){
       case PRECO_ABAIXO: case PRECO_ACIMA:
         alerta.setMargem(calcularMargemPreco());
+        break;
+      case PARTICIPACAO_SUPERIOR: case PARTICIPACAO_INFERIOR:
+        alerta.setMargem(calcularMargemShare());
+        break;
       default:
         break;
     }
@@ -42,5 +47,11 @@ public class CriadorDeAlertas {
     int precoEstipulado = Integer.parseInt(pesquisa.getPreco_estipulado());
     int precoColetado = Integer.parseInt(resposta.getResposta());
     return precoEstipulado - precoColetado;
+  }
+
+  private int calcularMargemShare() {
+    int participacaoEstipulada = Integer.parseInt(pesquisa.getParticipacao_estipulada());
+    int participacaoColetada = Integer.parseInt(resposta.getResposta());
+    return participacaoEstipulada - participacaoColetada;
   }
 }

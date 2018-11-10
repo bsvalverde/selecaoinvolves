@@ -1,6 +1,6 @@
 package com.involves.selecao.service;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class ProcessadorAlertas {
     Pesquisa[] pesquisas = coletor.coletar();
 
     for(Pesquisa pesquisa : pesquisas) {
-      ArrayList<Alerta> alertas = new AnalisadorDePesquisas(pesquisa).call();
+      List<Alerta> alertas = new AnalisadorDePesquisas(pesquisa).call();
       for(Alerta alerta : alertas) {
         gateway.salvar(alerta);
       }

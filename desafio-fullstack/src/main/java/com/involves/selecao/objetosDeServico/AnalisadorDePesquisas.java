@@ -58,6 +58,12 @@ public class AnalisadorDePesquisas {
   }
 
   private void analisaShare(Resposta resposta) {
-    System.out.println("Alerta ainda não implementado!");
+    int participacaoColetada = Integer.parseInt(resposta.getResposta());
+    int participacaoEstipulada = Integer.parseInt(pesquisa.getParticipacao_estipulada());
+    if (participacaoColetada != participacaoEstipulada) {
+      TipoAlerta tipo = participacaoColetada > participacaoEstipulada ? TipoAlerta.PARTICIPACAO_SUPERIOR : TipoAlerta.PARTICIPACAO_INFERIOR;
+      CriadorDeAlertas criador = new CriadorDeAlertas(pesquisa, resposta, tipo);
+      alertas.add(criador.call());
+    }
   }
 }
