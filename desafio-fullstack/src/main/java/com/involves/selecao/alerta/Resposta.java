@@ -1,6 +1,10 @@
 package com.involves.selecao.alerta;
 
 public class Resposta {
+
+  public static final String SITUACAO = "Qual a situação do produto?";
+  public static final String PRECO = "Qual o preço do produto?";
+  public static final String SHARE = "%Share";
   
   private String pergunta;
   private String resposta;

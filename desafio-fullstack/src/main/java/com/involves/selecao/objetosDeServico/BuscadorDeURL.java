@@ -1,16 +1,19 @@
-package com.involves.selecao.service;
+package com.involves.selecao.objetosDeServico;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.springframework.stereotype.Service;
+public class BuscadorDeURL {
 
-@Service
-public class BuscadorURLService {
+  private String src;
+
+  public BuscadorDeURL(String src) {
+    this.src = src;
+  }
   
-  public String buscar(String src) throws IOException {
+  public String call() throws IOException {
     URL url = new URL(src);
     HttpURLConnection con = (HttpURLConnection) url.openConnection();
     con.setRequestMethod("GET");
