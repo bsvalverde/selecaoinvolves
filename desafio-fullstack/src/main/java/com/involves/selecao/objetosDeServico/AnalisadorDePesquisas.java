@@ -41,7 +41,7 @@ public class AnalisadorDePesquisas {
   }
 
   private void analisaSituacao(Resposta resposta) {
-    if(resposta.getResposta().equals("Produto ausente na gondola")) {
+    if(resposta.getResposta().equals(Resposta.PRODUTO_AUSENTE)) {
       CriadorDeAlertas criador = new CriadorDeAlertas(pesquisa, resposta, TipoAlerta.RUPTURA);
       alertas.add(criador.call());
     }
