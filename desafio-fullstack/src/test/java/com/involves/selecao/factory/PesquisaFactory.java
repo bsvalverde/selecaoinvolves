@@ -75,7 +75,7 @@ public class PesquisaFactory {
     pesquisa.setCategoria("Automóveis");
     pesquisa.setParticipacao_estipulada("50");
     Resposta resposta = RespostaFactory.share();
-    resposta.setResposta("50");
+    resposta.setResposta("60");
     pesquisa.getRespostas().add(resposta);
     return pesquisa;
   }
@@ -85,8 +85,20 @@ public class PesquisaFactory {
     pesquisa.setCategoria("Automóveis");
     pesquisa.setParticipacao_estipulada("50");
     Resposta resposta = RespostaFactory.share();
-    resposta.setResposta("50");
+    resposta.setResposta("40");
     pesquisa.getRespostas().add(resposta);
+    return pesquisa;
+  }
+
+  public static Pesquisa outraPergunta() {
+    Pesquisa pesquisa = basePesquisa();
+    Resposta resposta = RespostaFactory.outraPergunta();
+    pesquisa.getRespostas().add(resposta);
+    return pesquisa;
+  }
+
+  public static Pesquisa nenhumaPergunta() {
+    Pesquisa pesquisa = basePesquisa();
     return pesquisa;
   }
 }
