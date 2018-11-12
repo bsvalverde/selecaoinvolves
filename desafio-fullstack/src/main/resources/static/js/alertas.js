@@ -1,19 +1,26 @@
 const FiltroCheckbox = (props) => {
   return (
-    <div>
+    <div className="filtro">
+      <label className="switch">
+        <input type="checkbox" 
+               checked={props.filtro.mostrar}
+               onChange={() => {props.toggleFiltro(props.filtro.flTipo)}}/>
+        <span className="slider"></span>
+      </label>
       <span>{props.filtro.nome}</span>
-      <input type="checkbox" 
-             checked={props.filtro.mostrar}
-             onChange={() => {props.toggleFiltro(props.filtro.flTipo)}}/>
     </div>
   );
 }
 
 const FiltroTexto = (props) => {
   return (
-    <input type="text"
-           value={ props.filtroPontoDeVenda }
-           onChange={ props.modificadorFiltro } />
+    <div className="filtro-texto">
+      <span>Ponto de Venda:</span>
+      <input type="text"
+             placeholder="Ponto de venda"
+             value={ props.filtroPontoDeVenda }
+             onChange={ props.modificadorFiltro } />
+    </div>
   );
 }
 
@@ -25,7 +32,8 @@ const Filtros = (props) => {
             toggleFiltro={props.toggleFiltro} />
   });
   return (
-    <div>
+    <div className="card-filtros">
+      <span className="subtitulo">Filtros</span>
       <FiltroTexto
         filtroPontoDeVenda={props.filtroPontoDeVenda}
         modificadorFiltro={props.modificadorFiltro} />
@@ -35,13 +43,25 @@ const Filtros = (props) => {
 }
 
 const Alerta = (props) => {
+  let produto = null;
+  if (props.alerta.produto != null) {
+    produto = <p><span>Produto: </span>{props.alerta.produto}</p>
+  }
+  let categoria = null;
+  if (props.alerta.categoria != null) {
+    categoria = <p><span>Categoria: </span>{props.alerta.categoria}</p>
+  }
+  let margem = null;
+  if (props.alerta.margem != null) {
+    margem = <p><span>Margem: </span>{props.alerta.margem}</p>
+  }
   return (
-    <div className="card">
-      <div>{props.alerta.produto}</div>
-      <div>{props.alerta.pontoDeVenda}</div>
-      <div>{props.alerta.descricao}</div>
-      <div>{props.alerta.categoria}</div>
-      <div>{props.alerta.margem}</div>
+    <div className="card-alerta">
+      <p><span>Ponto de Venda: </span>{props.alerta.pontoDeVenda}</p>
+      {produto}
+      {categoria}
+      <p><span>Descrição: </span>{props.alerta.descricao}</p>
+      {margem}
     </div>
   );
 }
@@ -189,6 +209,7 @@ class App extends React.Component {
           filtros={this.state.filtros}
           modificadorFiltro={this.mudarFiltroPontoDeVendaHandler}
           toggleFiltro={this.toggleFiltroHandler} />
+        <span className="subtitulo">Alertas</span>
       { alertas }
       </div>
     );
