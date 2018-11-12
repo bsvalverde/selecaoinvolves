@@ -16,23 +16,23 @@ import com.involves.selecao.service.ProcessadorAlertas;
 @RequestMapping("/alertas")
 public class AlertaController {
 
-	@Autowired
-	private BuscaAlertasService buscaAlertasService;
-	
-	@Autowired
-	private ProcessadorAlertas processador;
-	
-	@GetMapping
+  @Autowired
+  private BuscaAlertasService buscaAlertasService;
+  
+  @Autowired
+  private ProcessadorAlertas processador;
+  
+  @GetMapping
     public List<Alerta> alertas() {
-		return buscaAlertasService.buscarTodos();
+    return buscaAlertasService.buscarTodos();
     }
-	
-	@GetMapping("/processar")
+  
+  @GetMapping("/processar")
     public void processar() {
-		try {
-			processador.processa();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+      try {
+        processador.processa();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
 }
